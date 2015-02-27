@@ -72,7 +72,12 @@
 
                         if (!angular.equals($storage, _last$storage)) {
                             angular.forEach($storage, function(v, k) {
-                                angular.isDefined(v) && '$' !== k[0] && webStorage.setItem('ngStorage-' + k, angular.toJson(v));
+                                try {
+                                    angular.isDefined(v) && '$' !== k[0] && webStorage.setItem('ngStorage-' + k, angular.toJson(v));
+                                } catch(err) {
+                                    $log.warn('This browser does not support local storage! Error:' + err)
+                                }
+
 
                                 delete _last$storage[k];
                             });
